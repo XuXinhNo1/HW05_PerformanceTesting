@@ -133,7 +133,7 @@ $(document).ready(function() {
         widgets: ['zebra']
     });
 
-    var data = {"OkPercent": 84.81100853509841, "KoPercent": 15.188991464901585};
+    var data = {"OkPercent": 80.23866348448688, "KoPercent": 19.761336515513126};
     var dataset = [
         {
             "label" : "FAIL",
@@ -173,7 +173,7 @@ $(document).ready(function() {
     });
 
     // Creates APDEX table
-    createTable($("#apdexTable"), {"supportsControllersDiscrimination": true, "overall": {"data": [0.7958543807699007, 500, 1500, "Total"], "isController": false}, "titles": ["Apdex", "T (Toleration threshold)", "F (Frustration threshold)", "Label"], "items": [{"data": [0.9573361082206036, 500, 1500, "T02_Get_Admin_Orders"], "isController": false}, {"data": [0.45379273504273504, 500, 1500, "T03_Update_Order_Status"], "isController": false}, {"data": [0.9653312788906009, 500, 1500, "T01_Admin_Login"], "isController": false}]}, function(index, item){
+    createTable($("#apdexTable"), {"supportsControllersDiscrimination": true, "overall": {"data": [0.7618933969769291, 500, 1500, "Total"], "isController": false}, "titles": ["Apdex", "T (Toleration threshold)", "F (Frustration threshold)", "Label"], "items": [{"data": [0.0, 500, 1500, "T00_BruteForce_Login_Lockout"], "isController": false}, {"data": [0.9763328350772297, 500, 1500, "T02_Get_Admin_Orders"], "isController": false}, {"data": [0.410993444276349, 500, 1500, "T03_Update_Order_Status"], "isController": false}, {"data": [0.9891944990176817, 500, 1500, "T01_Admin_Login"], "isController": false}]}, function(index, item){
         switch(index){
             case 0:
                 item = item.toFixed(3);
@@ -187,7 +187,7 @@ $(document).ready(function() {
     }, [[0, 0]], 3);
 
     // Create statistics table
-    createTable($("#statisticsTable"), {"supportsControllersDiscrimination": true, "overall": {"data": ["Total", 5741, 872, 15.188991464901585, 342.76328165824725, 3, 882, 331.0, 531.0, 601.0, 690.5799999999999, 282.0021613125062, 16765.72429680592, 92.35840563292072], "isController": false}, "titles": ["Label", "#Samples", "FAIL", "Error %", "Average", "Min", "Max", "Median", "90th pct", "95th pct", "99th pct", "Transactions/s", "Received", "Sent"], "items": [{"data": ["T02_Get_Admin_Orders", 1922, 0, 0.0, 328.22944849115476, 8, 779, 324.0, 486.70000000000005, 566.0, 671.0799999999999, 95.2286577813011, 16821.892863889163, 32.455860903978596], "isController": false}, {"data": ["T03_Update_Order_Status", 1872, 872, 46.58119658119658, 403.5630341880353, 5, 882, 419.0, 593.0, 645.3499999999999, 763.27, 93.08801591248135, 29.01424975136748, 36.62478438898558], "isController": false}, {"data": ["T01_Admin_Login", 1947, 0, 0.0, 298.6527991782234, 3, 876, 291.0, 461.0, 532.5999999999999, 664.52, 95.68037741412354, 59.80023588382721, 24.013532222099364], "isController": false}]}, function(index, item){
+    createTable($("#statisticsTable"), {"supportsControllersDiscrimination": true, "overall": {"data": ["Total", 6285, 1242, 19.761336515513126, 302.2362768496419, 4, 927, 290.0, 487.40000000000055, 557.0, 661.2800000000007, 317.74519716885743, 18026.44692200139, 103.35630411084428], "isController": false}, "titles": ["Label", "#Samples", "FAIL", "Error %", "Average", "Min", "Max", "Median", "90th pct", "95th pct", "99th pct", "Transactions/s", "Received", "Sent"], "items": [{"data": ["T00_BruteForce_Login_Lockout", 259, 259, 100.0, 277.4054054054054, 11, 700, 279.0, 433.0, 510.0, 608.4, 13.094696395166592, 4.366511672733708, 3.4131054401132515], "isController": false}, {"data": ["T02_Get_Admin_Orders", 2007, 0, 0.0, 298.4618834080717, 9, 771, 296.0, 445.4000000000001, 495.0, 635.8400000000001, 102.34574196838348, 18081.537690033783, 34.88150776070882], "isController": false}, {"data": ["T03_Update_Order_Status", 1983, 983, 49.57135653050933, 363.1780131114469, 5, 927, 378.0, 564.0, 610.0, 714.1200000000006, 101.45817344589409, 31.738655986185723, 39.91859730749552], "isController": false}, {"data": ["T01_Admin_Login", 2036, 0, 0.0, 249.7603143418469, 4, 687, 247.0, 398.0, 455.14999999999986, 559.0, 102.93225480283114, 64.5838599595551, 25.917317050050556], "isController": false}]}, function(index, item){
         switch(index){
             // Errors pct
             case 3:
@@ -217,7 +217,7 @@ $(document).ready(function() {
     }, [[0, 0]], 0, summaryTableHeader);
 
     // Create error table
-    createTable($("#errorsTable"), {"supportsControllersDiscrimination": false, "titles": ["Type of error", "Number of errors", "% in errors", "% in all samples"], "items": [{"data": ["400/Bad Request", 872, 100.0, 15.188991464901585], "isController": false}]}, function(index, item){
+    createTable($("#errorsTable"), {"supportsControllersDiscrimination": false, "titles": ["Type of error", "Number of errors", "% in errors", "% in all samples"], "items": [{"data": ["400/Bad Request", 983, 79.14653784219001, 15.64041368337311], "isController": false}, {"data": ["403/Forbidden", 254, 20.45088566827697, 4.0413683373110585], "isController": false}, {"data": ["401/Unauthorized", 5, 0.4025764895330113, 0.07955449482895784], "isController": false}]}, function(index, item){
         switch(index){
             case 2:
             case 3:
@@ -228,7 +228,7 @@ $(document).ready(function() {
     }, [[1, 1]]);
 
         // Create top5 errors by sampler
-    createTable($("#top5ErrorsBySamplerTable"), {"supportsControllersDiscrimination": false, "overall": {"data": ["Total", 5741, 872, "400/Bad Request", 872, "", "", "", "", "", "", "", ""], "isController": false}, "titles": ["Sample", "#Samples", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors"], "items": [{"data": [], "isController": false}, {"data": ["T03_Update_Order_Status", 1872, 872, "400/Bad Request", 872, "", "", "", "", "", "", "", ""], "isController": false}, {"data": [], "isController": false}]}, function(index, item){
+    createTable($("#top5ErrorsBySamplerTable"), {"supportsControllersDiscrimination": false, "overall": {"data": ["Total", 6285, 1242, "400/Bad Request", 983, "403/Forbidden", 254, "401/Unauthorized", 5, "", "", "", ""], "isController": false}, "titles": ["Sample", "#Samples", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors"], "items": [{"data": ["T00_BruteForce_Login_Lockout", 259, 259, "403/Forbidden", 254, "401/Unauthorized", 5, "", "", "", "", "", ""], "isController": false}, {"data": [], "isController": false}, {"data": ["T03_Update_Order_Status", 1983, 983, "400/Bad Request", 983, "", "", "", "", "", "", "", ""], "isController": false}, {"data": [], "isController": false}]}, function(index, item){
         return item;
     }, [[0, 0]], 0);
 
