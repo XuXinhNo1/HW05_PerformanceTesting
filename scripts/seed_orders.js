@@ -1,7 +1,7 @@
 /**
  * seed_orders.js
- * Script to seed 1,000 pending orders and multi-admin accounts into SQLite database
- * Supports multi-account testing and lockout simulation
+ * Script to seed 10,000 pending orders and multi-admin accounts into SQLite database
+ * Supports Soak / Endurance Testing (15 minutes) and multi-account testing
  */
 const path = require('path');
 const sqlite3 = require(path.resolve(__dirname, '../../eshop-sut/backend/node_modules/sqlite3')).verbose();
@@ -16,7 +16,7 @@ const db = new sqlite3.Database(dbPath, (err) => {
     }
 });
 
-const TARGET_ORDERS = 1000;
+const TARGET_ORDERS = 10000;
 
 db.serialize(() => {
     // 1. Clean up duplicate users if any and ensure unique admin accounts
@@ -27,6 +27,7 @@ db.serialize(() => {
 
     const admins = [
         ['Admin User', 'admin@eshop.com', 'Admin123!', 'admin'],
+        ['Test User', 'test@eshop.com', 'Test1234!', 'user'],
         ['Admin User 1', 'admin1@eshop.com', 'Admin123!', 'admin'],
         ['Admin User 2', 'admin2@eshop.com', 'Admin123!', 'admin'],
         ['Admin User 3', 'admin3@eshop.com', 'Admin123!', 'admin'],
@@ -57,7 +58,8 @@ db.serialize(() => {
 
         const toAdd = Math.max(TARGET_ORDERS - row.count, 0);
         if (toAdd > 0) {
-            console.log(`Adding ${toAdd} pending orders to database...`);
+            console.log(`Adding ${toAdd} pending orders to database (fast batch mode)...`);
+            db.run('BEGIN TRANSACTION');
             const stmt = db.prepare('INSERT INTO orders (user_id, total_amount, status, shipping_address, created_at) VALUES (?, ?, ?, ?, ?)');
             for (let i = 1; i <= toAdd; i++) {
                 const amount = amounts[i % amounts.length];
@@ -67,9 +69,10 @@ db.serialize(() => {
                 stmt.run(2, amount, 'pending', address, date);
             }
             stmt.finalize();
+            db.run('COMMIT');
         }
 
-        // Reset all orders back to 'pending' so test plans can be executed cleanly repeatedly
+        // Reset all orders back to 'pending'
         db.run("UPDATE orders SET status = 'pending'", (err) => {
             if (err) console.error('Error resetting order statuses to pending:', err);
             else console.log('All orders reset to pending status for fresh test run.');
@@ -78,7 +81,7 @@ db.serialize(() => {
                 console.log('Seeding completed. Summary of orders by status:');
                 console.table(rows);
 
-                db.all('SELECT id, name, email, role, login_attempts, locked_until FROM users', [], (err, urows) => {
+                db.all('SELECT id, name, email, role, login_attempts, locked_until FROM users ORDER BY id ASC', [], (err, urows) => {
                     console.log('Active users in database:');
                     console.table(urows);
                     db.close();
